@@ -1,6 +1,9 @@
 export const state = {
-  currentScreen: 'categories', // 'categories' or 'items'
-  selectedCategory: null
+  currentScreen: 'categories',
+  selectedCategory: null,
+  isLoading: true,
+  sortOption: 'default',
+  theme: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
 };
 
 const listeners = [];
@@ -13,11 +16,12 @@ export function setState(newState) {
   Object.assign(state, newState);
   notifyListeners();
   
-  // Also preserve scroll position properly based on screen transitions.
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+  if (newState.currentScreen && newState.isLoading) {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }
 
 export function subscribe(listener) {

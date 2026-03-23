@@ -1,27 +1,30 @@
 import { setState } from './state.js';
 
-/**
- * Super simple hash router to maintain browser back-button compatibility.
- */
 export function initRouter() {
-  // Sync state to URL when page loads
   handleHashChange();
-
-  // Listen to browser navigation
   window.addEventListener('hashchange', handleHashChange);
 }
 
 function handleHashChange() {
-  const hash = window.location.hash.slice(1); // remove '#'
+  const hash = window.location.hash.slice(1);
+  const newState = { isLoading: true, searchQuery: '' };
   
   if (!hash || hash === 'categories') {
-    setState({ currentScreen: 'categories', selectedCategory: null });
+    newState.currentScreen = 'categories';
+    newState.selectedCategory = null;
   } else if (hash.startsWith('category/')) {
-    const categoryInfo = hash.split('category/')[1];
-    // Decode in case of spaces in category name
-    const decodedCategory = decodeURIComponent(categoryInfo);
-    setState({ currentScreen: 'items', selectedCategory: decodedCategory });
+    newState.currentScreen = 'items';
+    newState.selectedCategory = decodeURIComponent(hash.split('category/')[1]);
   }
+  
+  setState(newState);
+  
+  // Fake async render: Skeleton loader while rendering items
+  setTimeout(() => {
+    import('./state.js').then(({ setState }) => {
+      setState({ isLoading: false });
+    });
+  }, 150); // Small 150ms delay for visual feedback
 }
 
 export function navigateTo(path) {
