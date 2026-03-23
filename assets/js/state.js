@@ -15,7 +15,7 @@ export function getState() {
 export function setState(newState) {
   Object.assign(state, newState);
   notifyListeners();
-  
+
   if (newState.currentScreen && newState.isLoading) {
     window.scrollTo({
       top: 0,
