@@ -100,7 +100,7 @@ const App = {
       </aside>
     `;
 
-    html += `<main class="flex-1 min-w-0 pb-4 lg:pb-0 w-full px-4 sm:px-6 lg:px-0">`;
+    html += `<main class="flex-1 min-w-0 pb-4 lg:pb-0 w-full px-4 sm:px-6 lg:px-0 lg:max-w-[75%] xl:max-w-[75%]">`;
 
     if (isCategoriesScreen) {
       html += `<div class="block lg:hidden w-full">`;
