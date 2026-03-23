@@ -155,7 +155,7 @@ const App = {
     
     // Global App Footer
     html += `
-       <footer class="mt-6 text-center text-slate-400/70 dark:text-slate-600/70 text-[10px] pb-3 border-t border-slate-200/50 dark:border-slate-700/50 pt-3 max-w-7xl mx-auto w-full footer-glass">
+       <footer class="mt-4 text-center text-slate-400/70 dark:text-slate-600/70 text-[10px] pt-2 pb-2 border-t border-slate-200/50 dark:border-slate-700/50 max-w-7xl mx-auto w-full footer-glass">
          <p>Tilak Nagar, Mumbai &bull; Open 10 AM &ndash; 11 PM</p>
        </footer>
     `;
