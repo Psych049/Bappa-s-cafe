@@ -1,7 +1,6 @@
 export function ItemCard(item) {
   return `
     <div class="card item-card overflow-hidden flex flex-col mb-4 sm:mb-0 cursor-pointer h-full outline-none select-none group border border-slate-100 dark:border-slate-800">
-      <!-- Static placeholder div -->
       <div class="h-32 sm:h-40 xl:h-48 w-full bg-slate-100/50 dark:bg-slate-800/80 flex items-center justify-center font-bold text-slate-300 dark:text-slate-600 tracking-wider text-lg sm:text-xl uppercase group-hover:bg-slate-100 dark:group-hover:bg-slate-700/50 transition-colors duration-300">
         ${item.category}
       </div>

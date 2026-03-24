@@ -15,23 +15,18 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Base App Touch Optimizations */
 * {
   -webkit-touch-callout: none;
 }
 
-/* Hide scrollbar for seamless app feel */
 ::-webkit-scrollbar {
   display: none;
 }
 
-/* --------------------------------------------------
-   CARD SYSTEM
--------------------------------------------------- */
 .card {
   border-radius: 1.5rem;
   background: white;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
   transition: all 0.2s var(--ease);
 }
 
@@ -41,20 +36,18 @@ body {
 
 @media (hover: hover) {
   .card:hover {
-    box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
   }
 }
 
-/* --------------------------------------------------
-   INTERACTIONS & HOVER STATES
--------------------------------------------------- */
-.category-card, .item-card {
+.category-card,
+.item-card {
   transition: all 0.2s var(--ease);
 }
 
 .category-card:hover {
   transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   border-color: #fbd38d;
 }
 
@@ -65,7 +58,6 @@ body {
   }
 }
 
-/* Specific Active Touch Feedback */
 button:active,
 .category-card:active,
 .item-card:active {
@@ -73,19 +65,6 @@ button:active,
   transition-duration: 0.1s;
 }
 
-/* --------------------------------------------------
-   Z-INDEX LAYERING SYSTEM
-   z-1    → Item/Category cards (base content)
-   z-10   → Section header (sort wrapper)
-   z-40   → Glass Header (sticky nav)
-   z-9999 → Dropdown menu panel
--------------------------------------------------- */
-
-/* --------------------------------------------------
-   SECTION HEADER — sort dropdown anchor
-   Position relative here so dropdown's `position:absolute`
-   resolves against THIS element, not any overflow:hidden parent.
--------------------------------------------------- */
 .section-header {
   position: relative;
   z-index: 10;
@@ -96,9 +75,6 @@ button:active,
   z-index: 10;
 }
 
-/* --------------------------------------------------
-   GLASS HEADER
--------------------------------------------------- */
 .glass-header {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -115,44 +91,46 @@ button:active,
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* --------------------------------------------------
-   SKELETON LOADER
--------------------------------------------------- */
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    #f1f5f9 25%,
-    #e2e8f0 37%,
-    #f1f5f9 63%
-  );
+  background: linear-gradient(90deg,
+      #f1f5f9 25%,
+      #e2e8f0 37%,
+      #f1f5f9 63%);
   background-size: 400% 100%;
   animation: shimmer 1.4s ease infinite;
 }
 
 .dark .skeleton {
-  background: linear-gradient(
-    90deg,
-    #1e293b 25%,
-    #334155 37%,
-    #1e293b 63%
-  );
+  background: linear-gradient(90deg,
+      #1e293b 25%,
+      #334155 37%,
+      #1e293b 63%);
 }
 
 @keyframes shimmer {
-  0% { background-position: 100% 0; }
-  100% { background-position: -100% 0; }
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
 }
 
-/* --------------------------------------------------
-   ANIMATIONS & VISUALS
--------------------------------------------------- */
 .screen-transition {
   animation: fadeIn 0.3s var(--ease) forwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .item-card {
@@ -169,7 +147,7 @@ button:active,
 @media (hover: hover) {
   .item-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
   }
 }
 
@@ -187,6 +165,7 @@ button:active {
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -203,11 +182,11 @@ button:active {
   visibility: hidden;
   pointer-events: none;
   transition: transform 0.2s ease, opacity 0.2s ease, visibility 0.2s;
-  /* Ensure dropdown floats above ALL card content */
   position: absolute;
   right: 0;
   top: 110%;
   z-index: 9999;
+  overflow-y: auto;
 }
 
 .dropdown-open {
@@ -217,7 +196,6 @@ button:active {
   pointer-events: auto;
 }
 
-/* Dark mode panel background — can't be done via inline style */
 .dark .dark-panel {
   background: #1e293b;
 }
@@ -248,9 +226,6 @@ button:active {
   background: linear-gradient(to bottom, #f97316, #ef4444);
 }
 
-/* --------------------------------------------------
-   RESPONSIVE ENHANCEMENTS
--------------------------------------------------- */
 @media (min-width: 1024px) {
   body {
     font-size: 17px;
@@ -261,15 +236,11 @@ button:active {
   }
 }
 
-/* Auto Dark Mode Fallback Extensions */
 .dark body {
   background-color: #0f172a;
   color: #e2e8f0;
 }
 
-/* --------------------------------------------------
-   FOOTER
--------------------------------------------------- */
 .footer-glass {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -278,4 +249,104 @@ button:active {
 
 .dark .footer-glass {
   background: rgba(15, 23, 42, 0.5);
+}
+
+/* ── Premium Theme Toggle Pill ── */
+.theme-toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 64px;
+  height: 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+  box-shadow: 0 2px 10px rgba(249, 115, 22, 0.35);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+
+.theme-toggle-dark .theme-toggle-track {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.theme-toggle-pill:active .theme-toggle-track {
+  transform: scale(0.96);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  left: 4px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+  z-index: 2;
+}
+
+.theme-toggle-dark .theme-toggle-thumb {
+  transform: translateX(32px);
+  background: #e0e7ff;
+}
+
+.theme-toggle-sun,
+.theme-toggle-moon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1;
+}
+
+.theme-toggle-sun {
+  left: 8px;
+  color: #fff;
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-toggle-moon {
+  right: 8px;
+  color: #c7d2fe;
+  opacity: 0;
+  transform: scale(0.5) rotate(-30deg);
+}
+
+.theme-toggle-dark .theme-toggle-sun {
+  opacity: 0;
+  transform: scale(0.5) rotate(30deg);
+}
+
+.theme-toggle-dark .theme-toggle-moon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.theme-toggle-sun svg,
+.theme-toggle-moon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.theme-toggle-pill:hover .theme-toggle-track {
+  filter: brightness(1.08);
 }

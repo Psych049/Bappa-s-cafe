@@ -2,7 +2,6 @@ import { MENU_DATA, CATEGORY_IMAGES } from './data/menu.js';
 import { getState, subscribe, setState } from './state.js';
 import { initRouter, navigateTo } from './router.js';
 
-// Components
 import { Header } from './components/Header.js';
 import { CategoryCard } from './components/CategoryCard.js';
 import { Sidebar } from './components/Sidebar.js';
@@ -28,7 +27,6 @@ const App = {
   },
 
   setupEvents() {
-    // Navigation routing
     document.addEventListener('click', (e) => {
       const target = e.target.closest('[data-action="navigate"]');
       if (target) {
@@ -37,7 +35,6 @@ const App = {
       }
     });
 
-    // Theme Toggle logic
     document.addEventListener('click', e => {
       const themeBtn = e.target.closest('[data-action="toggle-theme"]');
       if (themeBtn) {
@@ -54,9 +51,7 @@ const App = {
       }
     });
 
-    // Sorting Dropdown logic
     document.addEventListener('click', e => {
-      // Toggle dropdown menu
       const toggleBtn = e.target.closest('[data-action="toggle-sort"]');
       const sortMenu = document.getElementById('sort-menu');
       const sortIcon = document.getElementById('sort-menu-icon');
@@ -69,7 +64,6 @@ const App = {
         return; // Prevent further bubbling
       }
 
-      // Handle sort selection
       const sortSelectBtn = e.target.closest('[data-action="sort-select"]');
       if (sortSelectBtn) {
         import('./state.js').then(({ setState }) => {
@@ -82,7 +76,6 @@ const App = {
         return;
       }
 
-      // Close dropdown when clicking outside
       if (sortMenu && sortMenu.classList.contains('dropdown-open') && !e.target.closest('#sort-dropdown-container')) {
         sortMenu.classList.remove('dropdown-open');
         if (sortIcon) sortIcon.classList.remove('rotate-180');
@@ -99,22 +92,18 @@ const App = {
     const isCategoriesScreen = state.currentScreen === 'categories';
     const categories = this.getUniqueCategories();
     
-    // MAIN CONTAINER
-    html += `<div class="w-full max-w-md sm:max-w-2xl lg:max-w-7xl mx-auto lg:flex lg:gap-8 lg:px-8 lg:pb-12 xl:gap-10 pt-4 lg:pt-8">`;
+    html += `<div class="w-full max-w-md sm:max-w-2xl lg:max-w-7xl mx-auto lg:flex lg:gap-8 lg:px-8 lg:pb-12 xl:gap-10 pt-3 lg:pt-6">`;
 
-    // --- SIDEBAR (Desktop Only) ---
     html += `
       <aside class="hidden lg:block lg:w-[25%] xl:w-[25%] lg:shrink-0 sticky top-[120px] h-max max-h-[calc(100vh-140px)] overflow-y-auto pr-3 custom-scrollbar pb-10">
         ${Sidebar(categories, state.selectedCategory)}
       </aside>
     `;
 
-    // --- MAIN CONTENT (70-75% on desktop) ---
-    html += `<main class="flex-1 min-w-0 pb-12 lg:pb-0 w-full px-4 sm:px-6 lg:px-0">`;
+    html += `<main class="flex-1 min-w-0 pb-4 lg:pb-0 w-full px-4 sm:px-6 lg:px-0">`;
 
     if (isCategoriesScreen) {
-      // MOBILE CATEGORIES LIST
-      html += `<div class="block lg:hidden w-full mt-2">`;
+      html += `<div class="block lg:hidden w-full">`;
       if (state.isLoading) {
          html += Array(4).fill().map(() => SkeletonCategory()).join('');
       } else {
@@ -122,17 +111,13 @@ const App = {
       }
       html += `</div>`;
       
-      // DESKTOP: show all items
       html += `<div class="hidden lg:block">`;
-      // Section header (title + sort dropdown) rendered OUTSIDE the animated grid
       html += this.renderSectionHeader(state, 'All Menu');
       html += this.renderItemGrid(state, MENU_DATA);
       html += `</div>`;
       
     } else {
-      // ITEMS SCREEN (Mobile & Desktop)
-      
-      // Desktop Back button
+
       html += `
         <div class="hidden lg:block mb-5">
           <button data-action="navigate" data-target="categories" 
@@ -146,14 +131,12 @@ const App = {
       `;
       
       const items = MENU_DATA.filter(i => i.category === state.selectedCategory);
-      // Section header lives OUTSIDE the animated items container
       html += this.renderSectionHeader(state, state.selectedCategory);
       html += this.renderItemGrid(state, items);
     }
     
     html += `</main></div>`;
-    
-    // Global App Footer
+
     html += `
        <footer class="mt-4 text-center text-slate-400/70 dark:text-slate-600/70 text-[10px] pt-2 pb-2 border-t border-slate-200/50 dark:border-slate-700/50 max-w-7xl mx-auto w-full footer-glass">
          <p>Tilak Nagar, Mumbai &bull; Open 10 AM &ndash; 11 PM</p>
@@ -163,14 +146,9 @@ const App = {
     this.root.innerHTML = html;
   },
 
-  /**
-   * Renders the section title + sort dropdown.
-   * MUST live outside any overflow:hidden or transform ancestor so the
-   * dropdown is never clipped by the items grid's stacking context.
-   */
   renderSectionHeader(state, title) {
     return `
-      <div class="section-header flex items-center justify-between gap-4 mb-5 sm:mb-6 select-none mt-2 lg:mt-0" id="sort-dropdown-container">
+      <div class="section-header flex items-center justify-between gap-4 mb-5 sm:mb-6 select-none" id="sort-dropdown-container">
         <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">${title}</h3>
         <div class="sort-wrapper">${SortDropdown(state.sortOption)}</div>
       </div>
@@ -180,7 +158,6 @@ const App = {
   renderItemGrid(state, items) {
     let sortedItems = [...items];
     
-    // Apply sorting
     if (state.sortOption === 'price-low') {
       sortedItems.sort((a, b) => a.price - b.price);
     } else if (state.sortOption === 'price-high') {
@@ -201,8 +178,7 @@ const App = {
         </div>
       `;
     } else {
-      // Grid container has NO overflow:hidden — dropdown must never be inside this
-      html += `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 screen-transition pb-6">`;
+      html += `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 screen-transition pb-2">`;
       if (state.isLoading) {
          html += Array(6).fill().map(() => SkeletonCard()).join('');
       } else {

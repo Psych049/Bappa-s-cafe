@@ -19,12 +19,11 @@ function handleHashChange() {
   
   setState(newState);
   
-  // Fake async render: Skeleton loader while rendering items
   setTimeout(() => {
     import('./state.js').then(({ setState }) => {
       setState({ isLoading: false });
     });
-  }, 150); // Small 150ms delay for visual feedback
+  }, 150);
 }
 
 export function navigateTo(path) {
